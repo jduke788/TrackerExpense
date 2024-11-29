@@ -1,0 +1,90 @@
+﻿.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.add-expense {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.add-button {
+    background-color: #4CAF50;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+}
+
+.add-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.summary {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.expenses {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.expense-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.expense-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expense-meta {
+    color: gray;
+    margin-top: 8px;
+}
+
+.expense-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.edit-button,
+.delete-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-button {
+    background-color: #e7f3ff;
+    color: #007bff;
+}
+
+.delete-button {
+    background-color: #ffe7e7;
+    color: #dc3545;
+}
+
+.delete-icon {
+    width: 18px;
+    height: 18px;
+}

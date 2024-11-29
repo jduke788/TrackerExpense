@@ -1,0 +1,37 @@
+﻿@page "/expense/detail/{id:int}"
+@using BlazorExpenseTracker.Client.Services.ExpenseService
+@inject IExpenseService ExpenseService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Expense Detail</PageTitle>
+
+@if (expense == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="expense-detail">
+        <h3>@expense.Title</h3>
+        <p><strong>Description:</strong> @expense.Description</p>
+        <p><strong>Amount:</strong> @expense.Amount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))</p>
+        <p><strong>Date:</strong> @expense.CreatedAt.ToString("dd MMM yyyy hh:mm tt")</p>
+    </div>
+
+    <button @onclick="GoBack">Back</button>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private ExpenseModel expense;
+
+    protected override async Task OnInitializedAsync()
+    {
+        expense = await ExpenseService.GetExpenseDetailsAsync(Id);
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

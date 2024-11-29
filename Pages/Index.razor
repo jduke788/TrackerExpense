@@ -1,0 +1,70 @@
+﻿@page "/"
+@using BlazorExpenseTracker.Client.Services.ExpenseService
+@inject IExpenseService ExpenseService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Expense Tracker</PageTitle>
+
+<div class="container">
+  
+    <div class="add-expense">
+        <a href="/expense" class="add-button">
+            
+             Add
+        </a>
+    </div>
+
+
+    <div class="summary">
+        <p>Total Expenses</p>
+        <h2>@ExpenseService.TotalExpenses.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))</h2>
+
+    </div>
+
+    <div class="expenses">
+        @foreach (var expense in @expenses)
+        {
+            <div class="expense-card">
+                <div class="expense-header">
+                    <h3>@expense.Title</h3>
+                    <span class="expense-amount">
+                        @expense.Amount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                    </span>
+                </div>
+                <div class="expense-meta">
+                    <p>@expense.CreatedAt.ToString("dd MMM yyyy hh:mm tt")</p>
+                </div>
+                <div class="expense-actions">
+                    <button class="edit-button" @onclick="() => OpenEditForm(expense.Id)">
+                     Edit
+                    </button>
+                    <button class="delete-button" @onclick="() => DeleteExpense(expense.Id)">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    List<ExpenseModel> expenses = new List<ExpenseModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ExpenseService.GetExpensesAsync();
+        expenses = ExpenseService.Expenses;
+    }
+
+    private async void OpenEditForm(int id)
+    {
+        NavigationManager.NavigateTo($"/expense/{id}");
+    }
+
+    private async void DeleteExpense(int id)
+    {
+        await ExpenseService.RemoveExpense(id);
+        await ExpenseService.GetExpensesAsync();
+        StateHasChanged();
+    }
+}
