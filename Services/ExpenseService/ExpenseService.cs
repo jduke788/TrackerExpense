@@ -1,70 +1,72 @@
-﻿using TrackerExpense.Shared.Models;
-using System.Net.Http.Json;
-using BlazorExpenseTracker.Client.Services.ExpenseService;
+﻿using TrackerExpense.Server.Data;
+using TrackerExpense.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace TrackerExpense.Client.Services.ExpenseService
+namespace TrackerExpense.Server.Services.ExpenseService
 {
     public class ExpenseService : IExpenseService
     {
-        private readonly HttpClient _http;
+        private readonly DataContext _context;
 
-        public ExpenseService(HttpClient http)
+        public ExpenseService(DataContext context)
         {
-            _http = http;
+            _context = context;
         }
 
 
-        public List<ExpenseModel> Expenses { get; set; }
-        public decimal TotalExpenses { get; set; }
-
-        public async Task<ExpenseModel> CreateExpenseAsync(ExpenseModel expense)
+        public async Task<ExpenseModel> CreateExpensesAsync(ExpenseModel expense)
         {
-            var response = await _http.PostAsJsonAsync<ExpenseModel>("/api/Expenses", expense);
-            return await response.Content.ReadFromJsonAsync<ExpenseModel>();
+            
+            expense.CreatedAt = DateTime.UtcNow;
+
+            var response = await _context.Expenses.AddAsync(expense);
+            await _context.SaveChangesAsync();
+            return response.Entity;
+
         }
 
         public async Task<ExpenseModel> EditExpenseAsync(ExpenseModel expense, int id)
         {
-            var response = await _http.PutAsJsonAsync<ExpenseModel>($"/api/Expenses/{id}", expense);
-            return await response.Content.ReadFromJsonAsync<ExpenseModel>();
+            ExpenseModel response = null;
+            var DbExpense = await _context.Expenses.FirstOrDefaultAsync(e => e.Id == id);
+
+            if (DbExpense != null)
+            {
+                DbExpense.Amount = expense.Amount;
+                DbExpense.Title = expense.Title;
+                DbExpense.Description = expense.Description;
+                DbExpense.CreatedAt = DateTime.UtcNow;
+
+                await _context.SaveChangesAsync();
+                response = DbExpense;
+            }
+
+            return response;
         }
+
 
         public async Task<List<ExpenseModel>> GetExpensesAsync()
         {
-            var response = await _http.GetFromJsonAsync<List<ExpenseModel>>("/api/Expenses");
+            var response = await _context.Expenses.OrderByDescending(e => e.CreatedAt).ToListAsync();
 
-            if (response != null)
-            {
-                Expenses = response;
-
-                CalculateTotalExpenses();
-
-            }
-
-            return Expenses;
+            return response;
         }
 
-        public Task RemoveExpense(int id)
+        public async Task RemoveExpense(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        private void CalculateTotalExpenses()
-        {
-            TotalExpenses = 0;
-
-            foreach (var expense in Expenses)
+            var DbExpense = await _context.Expenses.FirstOrDefaultAsync(e => e.Id == id);
+            if (DbExpense != null)
             {
-                TotalExpenses += expense.Amount;
+                _context.Expenses.Remove(DbExpense);
             }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<ExpenseModel> GetExpenseDetailsAsync(int id)
         {
-            var response = await _http.GetFromJsonAsync<ExpenseModel>($"/api/Expenses/{id}");
-
+            var response = await _context.Expenses.FirstOrDefaultAsync(e => e.Id == id);
             return response;
-
         }
 
     }
