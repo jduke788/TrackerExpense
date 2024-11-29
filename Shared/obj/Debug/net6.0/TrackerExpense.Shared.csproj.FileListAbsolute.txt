@@ -1,0 +1,12 @@
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\bin\Debug\net6.0\TrackerExpense.Shared.deps.json
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\bin\Debug\net6.0\TrackerExpense.Shared.dll
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\bin\Debug\net6.0\TrackerExpense.Shared.pdb
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\TrackerExpense.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\TrackerExpense.Shared.AssemblyInfoInputs.cache
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\TrackerExpense.Shared.AssemblyInfo.cs
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\TrackerExpense.Shared.csproj.CoreCompileInputs.cache
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\TrackerExpense.Shared.sourcelink.json
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\TrackerExpense.Shared.dll
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\refint\TrackerExpense.Shared.dll
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\TrackerExpense.Shared.pdb
+C:\Users\jduke\source\repos\TrackerExpense\TrackerExpense\Shared\obj\Debug\net6.0\ref\TrackerExpense.Shared.dll
